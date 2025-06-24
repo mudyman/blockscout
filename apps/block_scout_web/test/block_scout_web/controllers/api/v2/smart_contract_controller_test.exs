@@ -63,7 +63,7 @@ defmodule BlockScoutWeb.API.V2.SmartContractControllerTest do
                  "is_self_destructed" => false,
                  "deployed_bytecode" => to_string(address.contract_code),
                  "creation_bytecode" => nil,
-                 "status" => "success"
+                 "creation_status" => "success"
                }
 
       insert(:transaction,
@@ -86,7 +86,34 @@ defmodule BlockScoutWeb.API.V2.SmartContractControllerTest do
                  "deployed_bytecode" => to_string(address.contract_code),
                  "creation_bytecode" =>
                    "0x608060405234801561001057600080fd5b5060df8061001f6000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b114604e5780636d4ce63c146078575b600080fd5b348015605957600080fd5b5060766004803603810190808035906020019092919050505060a0565b005b348015608357600080fd5b50608a60aa565b6040518082815260200191505060405180910390f35b8060008190555050565b600080549050905600a165627a7a7230582061b7676067d537e410bb704932a9984739a959416170ea17bda192ac1218d2790029",
-                 "status" => "success"
+                 "creation_status" => "success"
+               }
+    end
+
+    test "get unverified smart-contract with failed creation status", %{conn: conn} do
+      address = insert(:address, contract_code: "0x")
+
+      creation_bytecode =
+        "0x608060405234801561001057600080fd5b5060df8061001f6000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b114604e5780636d4ce63c146078575b600080fd5b348015605957600080fd5b5060766004803603810190808035906020019092919050505060a0565b005b348015608357600080fd5b50608a60aa565b6040518082815260200191505060405180910390f35b8060008190555050565b600080549050905600a165627a7a7230582061b7676067d537e410bb704932a9984739a959416170ea17bda192ac1218d2790029"
+
+      insert(:transaction,
+        created_contract_address_hash: address.hash,
+        input: creation_bytecode
+      )
+      |> with_block(status: :error)
+
+      TestHelper.get_eip1967_implementation_error_response()
+
+      request = get(conn, "/api/v2/smart-contracts/#{Address.checksum(address.hash)}")
+      response = json_response(request, 200)
+
+      assert response ==
+               %{
+                 "proxy_type" => nil,
+                 "implementations" => [],
+                 "deployed_bytecode" => "0x",
+                 "creation_bytecode" => creation_bytecode,
+                 "creation_status" => "failed"
                }
     end
 
@@ -111,7 +138,7 @@ defmodule BlockScoutWeb.API.V2.SmartContractControllerTest do
       assert implementation.proxy_type == :eip1967
 
       request = get(conn, "/api/v2/smart-contracts/#{Address.checksum(proxy_address.hash)}")
-      response = json_response(request, 200)
+      json_response(request, 200)
     end
 
     test "get smart-contract", %{conn: conn} do
@@ -182,7 +209,7 @@ defmodule BlockScoutWeb.API.V2.SmartContractControllerTest do
         "license_type" => "none",
         "certified" => false,
         "is_blueprint" => false,
-        "status" => "success"
+        "creation_status" => "success"
       }
 
       TestHelper.get_eip1967_implementation_non_zero_address(implementation_address_hash_string)
@@ -554,7 +581,7 @@ defmodule BlockScoutWeb.API.V2.SmartContractControllerTest do
         "license_type" => "none",
         "certified" => false,
         "is_blueprint" => true,
-        "status" => "success"
+        "creation_status" => "success"
       }
 
       TestHelper.get_all_proxies_implementation_zero_addresses()
@@ -737,7 +764,7 @@ defmodule BlockScoutWeb.API.V2.SmartContractControllerTest do
                    "deployed_bytecode" => to_string(address.contract_code),
                    "creation_bytecode" =>
                      "0x608060405234801561001057600080fd5b5060df8061001f6000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b114604e5780636d4ce63c146078575b600080fd5b348015605957600080fd5b5060766004803603810190808035906020019092919050505060a0565b005b348015608357600080fd5b50608a60aa565b6040518082815260200191505060405180910390f35b8060008190555050565b600080549050905600a165627a7a7230582061b7676067d537e410bb704932a9984739a959416170ea17bda192ac1218d2790029",
-                   "status" => "success"
+                   "creation_status" => "success"
                  }
 
         TestHelper.get_all_proxies_implementation_zero_addresses()
@@ -823,7 +850,7 @@ defmodule BlockScoutWeb.API.V2.SmartContractControllerTest do
                    "deployed_bytecode" => to_string(address.contract_code),
                    "creation_bytecode" =>
                      "0x608060405234801561001057600080fd5b5060df8061001f6000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b114604e5780636d4ce63c146078575b600080fd5b348015605957600080fd5b5060766004803603810190808035906020019092919050505060a0565b005b348015608357600080fd5b50608a60aa565b6040518082815260200191505060405180910390f35b8060008190555050565b600080549050905600a165627a7a7230582061b7676067d537e410bb704932a9984739a959416170ea17bda192ac1218d2790029",
-                   "status" => "success"
+                   "creation_status" => "success"
                  }
 
         TestHelper.get_all_proxies_implementation_zero_addresses()
@@ -956,7 +983,7 @@ defmodule BlockScoutWeb.API.V2.SmartContractControllerTest do
                    "deployed_bytecode" => to_string(address.contract_code),
                    "creation_bytecode" =>
                      "0x608060405234801561001057600080fd5b5060df8061001f6000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b114604e5780636d4ce63c146078575b600080fd5b348015605957600080fd5b5060766004803603810190808035906020019092919050505060a0565b005b348015608357600080fd5b50608a60aa565b6040518082815260200191505060405180910390f35b8060008190555050565b600080549050905600a165627a7a7230582061b7676067d537e410bb704932a9984739a959416170ea17bda192ac1218d2790029",
-                   "status" => "success"
+                   "creation_status" => "success"
                  }
 
         request = get(conn, "/api/v2/smart-contracts/#{Address.checksum(address.hash)}")
@@ -1044,7 +1071,7 @@ defmodule BlockScoutWeb.API.V2.SmartContractControllerTest do
                    "deployed_bytecode" => to_string(address.contract_code),
                    "creation_bytecode" =>
                      "0x608060405234801561001057600080fd5b5060df8061001f6000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b114604e5780636d4ce63c146078575b600080fd5b348015605957600080fd5b5060766004803603810190808035906020019092919050505060a0565b005b348015608357600080fd5b50608a60aa565b6040518082815260200191505060405180910390f35b8060008190555050565b600080549050905600a165627a7a7230582061b7676067d537e410bb704932a9984739a959416170ea17bda192ac1218d2790029",
-                   "status" => "success"
+                   "creation_status" => "success"
                  }
 
         TestHelper.get_all_proxies_implementation_zero_addresses()
@@ -1165,7 +1192,7 @@ defmodule BlockScoutWeb.API.V2.SmartContractControllerTest do
                    "deployed_bytecode" => to_string(address.contract_code),
                    "creation_bytecode" =>
                      "0x608060405234801561001057600080fd5b5060df8061001f6000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b114604e5780636d4ce63c146078575b600080fd5b348015605957600080fd5b5060766004803603810190808035906020019092919050505060a0565b005b348015608357600080fd5b50608a60aa565b6040518082815260200191505060405180910390f35b8060008190555050565b600080549050905600a165627a7a7230582061b7676067d537e410bb704932a9984739a959416170ea17bda192ac1218d2790029",
-                   "status" => "success"
+                   "creation_status" => "success"
                  }
 
         request = get(conn, "/api/v2/smart-contracts/#{Address.checksum(address.hash)}")
@@ -1303,7 +1330,7 @@ defmodule BlockScoutWeb.API.V2.SmartContractControllerTest do
                    "deployed_bytecode" => to_string(address.contract_code),
                    "creation_bytecode" =>
                      "0x608060405234801561001057600080fd5b5060df8061001f6000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b114604e5780636d4ce63c146078575b600080fd5b348015605957600080fd5b5060766004803603810190808035906020019092919050505060a0565b005b348015608357600080fd5b50608a60aa565b6040518082815260200191505060405180910390f35b8060008190555050565b600080549050905600a165627a7a7230582061b7676067d537e410bb704932a9984739a959416170ea17bda192ac1218d2790029",
-                   "status" => "success"
+                   "creation_status" => "success"
                  }
 
         request = get(conn, "/api/v2/smart-contracts/#{Address.checksum(address.hash)}")
@@ -1441,7 +1468,7 @@ defmodule BlockScoutWeb.API.V2.SmartContractControllerTest do
                    "deployed_bytecode" => to_string(address.contract_code),
                    "creation_bytecode" =>
                      "0x608060405234801561001057600080fd5b5060df8061001f6000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b114604e5780636d4ce63c146078575b600080fd5b348015605957600080fd5b5060766004803603810190808035906020019092919050505060a0565b005b348015608357600080fd5b50608a60aa565b6040518082815260200191505060405180910390f35b8060008190555050565b600080549050905600a165627a7a7230582061b7676067d537e410bb704932a9984739a959416170ea17bda192ac1218d2790029",
-                   "status" => "success"
+                   "creation_status" => "success"
                  }
 
         request = get(conn, "/api/v2/smart-contracts/#{Address.checksum(address.hash)}")
