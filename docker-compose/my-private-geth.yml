@@ -1,0 +1,119 @@
+version: '3.9'
+
+services:
+  redis-db:
+    extends:
+      file: ./services/redis.yml
+      service: redis-db
+
+  db-init:
+    extends:
+      file: ./services/db.yml
+      service: db-init
+
+  db:
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+    extends:
+      file: ./services/db.yml
+      service: db
+
+  backend:
+    depends_on:
+      - db
+      - redis-db
+    extends:
+      file: ./services/backend.yml
+      service: backend
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+      args:
+        RELEASE_VERSION: 8.1.1
+    links:
+      - db:database
+    environment:
+      ETHEREUM_JSONRPC_VARIANT: 'geth'
+      # 确保连接到您的私有链
+      ETHEREUM_JSONRPC_HTTP_URL: 'http://192.168.0.44:8545/'
+      ETHEREUM_JSONRPC_TRACE_URL: 'http://192.168.0.44:8545/'
+      ETHEREUM_JSONRPC_WS_URL: 'ws://192.168.0.44:8546/'
+      # 私有链专用设置
+      COIN_NAME: 'ETH'
+      COIN: 'ETH'
+      NETWORK: 'Private Geth Chain'
+      SUBNETWORK: 'Private Chain (Chain ID: 12345)'
+      DISABLE_MARKET: 'true'
+      CHAIN_ID: '12345'
+      # 禁用 NFT 媒体处理功能（解决权限问题）
+      NFT_MEDIA_HANDLER_ENABLED: 'false'
+    env_file:
+      - ./envs/my-private-chain.env
+
+  nft_media_handler:
+    depends_on:
+      - backend
+    extends:
+      file: ./services/nft_media_handler.yml
+      service: nft_media_handler
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+      args:
+        RELEASE_VERSION: 8.1.1
+
+  visualizer:
+    extends:
+      file: ./services/visualizer.yml
+      service: visualizer
+
+  sig-provider:
+    extends:
+      file: ./services/sig-provider.yml
+      service: sig-provider
+
+  frontend:
+    depends_on:
+      - backend
+    extends:
+      file: ./services/frontend.yml
+      service: frontend
+
+  stats-db-init:
+    extends:
+      file: ./services/stats.yml
+      service: stats-db-init
+
+  stats-db:
+    depends_on:
+      stats-db-init:
+        condition: service_completed_successfully
+    extends:
+      file: ./services/stats.yml
+      service: stats-db
+
+  stats:
+    depends_on:
+      - stats-db
+      - backend
+    extends:
+      file: ./services/stats.yml
+      service: stats
+
+  user-ops-indexer:
+    depends_on:
+      - db
+      - backend
+    extends:
+      file: ./services/user-ops-indexer.yml
+      service: user-ops-indexer
+
+  proxy:
+    depends_on:
+      - backend
+      - frontend
+      - stats
+    extends:
+      file: ./services/nginx.yml
+      service: proxy

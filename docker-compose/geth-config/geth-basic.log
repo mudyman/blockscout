@@ -1,0 +1,40 @@
+nohup: ignoring input
+=== 启动 Geth 私有链 ===
+HTTP RPC: http://0.0.0.0:8545
+WebSocket: ws://0.0.0.0:8546
+INFO [06-27|09:24:14.265] Maximum peer count                       ETH=0 LES=0 total=0
+INFO [06-27|09:24:14.266] Smartcard socket not found, disabling    err="stat /run/pcscd/pcscd.comm: no such file or directory"
+WARN [06-27|09:24:14.266] Disable transaction unindexing for archive node 
+INFO [06-27|09:24:14.266] Enabling recording of key preimages since archive mode is used 
+INFO [06-27|09:24:14.266] Set global gas cap                       cap=25000000
+INFO [06-27|09:24:14.266] Allocated trie memory caches             clean=307.00MiB dirty=0.00B
+INFO [06-27|09:24:14.266] Allocated cache and file handles         database=/home/monero/blockscout/docker-compose/geth-config/my-private-chain/geth/chaindata cache=512.00MiB handles=524288
+INFO [06-27|09:24:19.315] Opened ancient database                  database=/home/monero/blockscout/docker-compose/geth-config/my-private-chain/geth/chaindata/ancient
+INFO [06-27|09:24:19.316] Initialised chain configuration          config="{ChainID: 12345 Homestead: 0 DAO: <nil> DAOSupport: false EIP150: 0 EIP155: 0 EIP158: 0 Byzantium: 0 Constantinople: 0 Petersburg: 0 Istanbul: 0, Muir Glacier: 0, Berlin: 0, YOLO v3: <nil>, Engine: clique}"
+INFO [06-27|09:24:19.317] Initialising Ethereum protocol           network=12345 dbversion=8
+INFO [06-27|09:24:19.318] Loaded most recent local header          number=0 hash="8cbe4b…8590e0" td=1 age=56y3mo2w
+INFO [06-27|09:24:19.318] Loaded most recent local full block      number=0 hash="8cbe4b…8590e0" td=1 age=56y3mo2w
+INFO [06-27|09:24:19.318] Loaded most recent local fast block      number=0 hash="8cbe4b…8590e0" td=1 age=56y3mo2w
+WARN [06-27|09:24:19.318] Loaded snapshot journal                  diskroot="37c01a…5ed022" diffs=missing
+INFO [06-27|09:24:19.318] Resuming previous snapshot wipe 
+INFO [06-27|09:24:19.318] Loaded local transaction journal         transactions=0 dropped=0
+INFO [06-27|09:24:19.318] Deleted state snapshot leftovers         kind=accounts wiped=0 elapsed="83.525µs"
+INFO [06-27|09:24:19.319] Deleted state snapshot leftovers         kind=storage  wiped=0 elapsed="20.757µs"
+INFO [06-27|09:24:19.319] Compacting snapshot account area  
+INFO [06-27|09:24:19.318] Wiper running, state snapshotting paused accounts=0 slots=0 storage=0.00B elapsed="124.853µs"
+INFO [06-27|09:24:19.318] Regenerated local transaction journal    transactions=0 accounts=0
+WARN [06-27|09:24:19.320] Unclean shutdown detected                booted=2025-06-27T09:23:12+0800 age=1m7s
+INFO [06-27|09:24:19.320] Starting peer-to-peer node               instance=Geth/v1.10.1-stable-c2d2f4ed/linux-amd64/go1.21.0
+INFO [06-27|09:24:19.452] Compacting snapshot storage area  
+INFO [06-27|09:24:19.452] Compacted snapshot area in database      elapsed=133.915ms
+INFO [06-27|09:24:19.453] Resuming state snapshot generation       root="37c01a…5ed022" accounts=0 slots=0 storage=0.00B elapsed="18.592µs"
+INFO [06-27|09:24:19.453] Generated state snapshot                 accounts=4 slots=0 storage=194.00B elapsed="472.828µs"
+INFO [06-27|09:24:19.537] New local node record                    seq=2 id=a3eae16a16346d4b ip=127.0.0.1 udp=0 tcp=30303
+INFO [06-27|09:24:19.537] Started P2P networking                   self="enode://5cb058172d6657464151534bb13beb23aa3c239b7c06db496bf8b9116d07aa4b979c6699da636d710b36e5f4ef01e4cda98f0a619862f25a92f7333a4dbeedf1@127.0.0.1:30303?discport=0"
+INFO [06-27|09:24:19.538] IPC endpoint opened                      url=/home/monero/blockscout/docker-compose/geth-config/my-private-chain/geth.ipc
+INFO [06-27|09:24:19.539] HTTP server started                      endpoint=[::]:8545 prefix= cors=* vhosts=*
+INFO [06-27|09:24:19.540] WebSocket enabled                        url=ws://[::]:8546
+INFO [06-27|09:24:19.540] Transaction pool price threshold updated price=1000000000
+INFO [06-27|09:24:19.540] Transaction pool price threshold updated price=1000000000
+ERROR[06-27|09:24:19.541] Cannot start mining without etherbase    err="etherbase must be explicitly specified"
+Fatal: Failed to start mining: etherbase missing: etherbase must be explicitly specified

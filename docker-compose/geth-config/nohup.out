@@ -1,0 +1,6 @@
+=== 启动 Geth 私有链 (无挖矿) ===
+HTTP RPC: http://0.0.0.0:8545
+WebSocket: ws://0.0.0.0:8546
+INFO [06-27|20:09:59.636] Maximum peer count                       ETH=0 LES=0 total=0
+INFO [06-27|20:09:59.636] Smartcard socket not found, disabling    err="stat /run/pcscd/pcscd.comm: no such file or directory"
+Fatal: Failed to create the protocol stack: datadir already used by another process

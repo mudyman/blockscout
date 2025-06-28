@@ -1,0 +1,51 @@
+nohup: ignoring input
+[0;34m=== Geth 私有链启动脚本 (兼容版本) ===[0m
+[1;33m使用本地编译的 geth: /home/monero/go-ethereum/build/bin/geth[0m
+[0;32m使用 Geth: /home/monero/go-ethereum/build/bin/geth[0m
+Geth
+Version: 1.10.1-stable
+Git Commit: c2d2f4ed8f232bb11663a1b01a2e578aa22f24bd
+Architecture: amd64
+Go Version: go1.21.0
+Operating System: linux
+GOPATH=/home/monero/go
+GOROOT=/usr/local/go
+[0;34m=== 启动 Geth 私有链 ===[0m
+[1;33mChain ID: 12345[0m
+[1;33mNetwork ID: 12345[0m
+[1;33mHTTP RPC: http://0.0.0.0:8545[0m
+[1;33mWebSocket: ws://0.0.0.0:8546[0m
+
+INFO [06-27|09:23:11.909] Maximum peer count                       ETH=0 LES=0 total=0
+INFO [06-27|09:23:11.909] Smartcard socket not found, disabling    err="stat /run/pcscd/pcscd.comm: no such file or directory"
+WARN [06-27|09:23:11.909] Disable transaction unindexing for archive node 
+INFO [06-27|09:23:11.910] Enabling recording of key preimages since archive mode is used 
+INFO [06-27|09:23:11.910] Set global gas cap                       cap=25000000
+INFO [06-27|09:23:11.910] Allocated trie memory caches             clean=307.00MiB dirty=0.00B
+INFO [06-27|09:23:11.910] Allocated cache and file handles         database=/home/monero/blockscout/docker-compose/geth-config/my-private-chain/geth/chaindata cache=512.00MiB handles=524288
+INFO [06-27|09:23:12.785] Opened ancient database                  database=/home/monero/blockscout/docker-compose/geth-config/my-private-chain/geth/chaindata/ancient
+INFO [06-27|09:23:12.785] Initialised chain configuration          config="{ChainID: 12345 Homestead: 0 DAO: <nil> DAOSupport: false EIP150: 0 EIP155: 0 EIP158: 0 Byzantium: 0 Constantinople: 0 Petersburg: 0 Istanbul: 0, Muir Glacier: 0, Berlin: 0, YOLO v3: <nil>, Engine: clique}"
+INFO [06-27|09:23:12.786] Initialising Ethereum protocol           network=12345 dbversion=<nil>
+WARN [06-27|09:23:12.786] Upgrade blockchain database version      from=<nil> to=8
+INFO [06-27|09:23:12.788] Loaded most recent local header          number=0 hash="8cbe4b…8590e0" td=1 age=56y3mo2w
+INFO [06-27|09:23:12.788] Loaded most recent local full block      number=0 hash="8cbe4b…8590e0" td=1 age=56y3mo2w
+INFO [06-27|09:23:12.788] Loaded most recent local fast block      number=0 hash="8cbe4b…8590e0" td=1 age=56y3mo2w
+WARN [06-27|09:23:12.788] Failed to load snapshot, regenerating    err="missing or corrupted snapshot"
+INFO [06-27|09:23:12.788] Rebuilding state snapshot 
+INFO [06-27|09:23:12.788] Deleted state snapshot leftovers         kind=accounts wiped=0 elapsed="88.9µs"
+WARN [06-27|09:23:12.788] Sanitizing invalid txpool price limit    provided=0 updated=1
+WARN [06-27|09:23:12.788] Sanitizing invalid txpool price bump     provided=0 updated=10
+INFO [06-27|09:23:12.788] Deleted state snapshot leftovers         kind=storage  wiped=0 elapsed="32.804µs"
+INFO [06-27|09:23:12.788] Compacting snapshot account area  
+INFO [06-27|09:23:12.788] Wiper running, state snapshotting paused accounts=0 slots=0 storage=0.00B elapsed="426.603µs"
+INFO [06-27|09:23:12.789] Regenerated local transaction journal    transactions=0 accounts=0
+WARN [06-27|09:23:12.789] Error reading unclean shutdown markers   error="leveldb: not found"
+INFO [06-27|09:23:12.789] Starting peer-to-peer node               instance=Geth/v1.10.1-stable-c2d2f4ed/linux-amd64/go1.21.0
+INFO [06-27|09:23:12.790] Stored checkpoint snapshot to disk       number=0 hash="8cbe4b…8590e0"
+INFO [06-27|09:23:12.911] Compacting snapshot storage area  
+INFO [06-27|09:23:12.976] New local node record                    seq=1 id=a3eae16a16346d4b ip=127.0.0.1 udp=0 tcp=30303
+INFO [06-27|09:23:12.976] Started P2P networking                   self="enode://5cb058172d6657464151534bb13beb23aa3c239b7c06db496bf8b9116d07aa4b979c6699da636d710b36e5f4ef01e4cda98f0a619862f25a92f7333a4dbeedf1@127.0.0.1:30303?discport=0"
+INFO [06-27|09:23:12.978] IPC endpoint opened                      url=/home/monero/blockscout/docker-compose/geth-config/my-private-chain/geth.ipc
+INFO [06-27|09:23:12.979] HTTP server started                      endpoint=[::]:8545 prefix= cors=* vhosts=*
+INFO [06-27|09:23:12.979] WebSocket enabled                        url=ws://[::]:8546
+Fatal: Failed to unlock account 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 (no key for given address or file)

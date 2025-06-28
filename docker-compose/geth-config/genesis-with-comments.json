@@ -1,0 +1,62 @@
+{
+  "_comment": "这是一个为 Blockscout 优化的 Geth 私有链 genesis 配置",
+  "_miner_addresses": [
+    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 - Hardhat 默认测试账户 #0",
+    "0x70997970C51812dc3A010C7d01b50e0d17dc79C8 - Hardhat 默认测试账户 #1", 
+    "请在 alloc 部分添加您自己的账户地址"
+  ],
+  "config": {
+    "chainId": 12345,
+    "homesteadBlock": 0,
+    "eip150Block": 0,
+    "eip155Block": 0,
+    "eip158Block": 0,
+    "byzantiumBlock": 0,
+    "constantinopleBlock": 0,
+    "petersburgBlock": 0,
+    "istanbulBlock": 0,
+    "muirGlacierBlock": 0,
+    "berlinBlock": 0,
+    "londonBlock": 0,
+    "arrowGlacierBlock": 0,
+    "grayGlacierBlock": 0,
+    "mergeNetsplitBlock": 0,
+    "terminalTotalDifficulty": 0,
+    "terminalTotalDifficultyPassed": true,
+    "shanghaiTime": 0,
+    "cancunTime": 0,
+    "clique": {
+      "period": 3,
+      "epoch": 30000
+    }
+  },
+  "difficulty": "0x1",
+  "gasLimit": "0x47b760",
+  "_extraData_note": "extraData 需要包含签名者地址，格式: 32字节填充 + 签名者地址 + 65字节签名填充",
+  "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000f39Fd6e51aad88F6F4ce6aB8827279cffFb920000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "_alloc_note": "预分配 ETH 到指定账户，单位是 wei (1 ETH = 10^18 wei)",
+  "alloc": {
+    "_comment_hardhat_account_0": "Hardhat 默认测试账户 #0",
+    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266": {
+      "balance": "10000000000000000000000000"
+    },
+    "_comment_hardhat_account_1": "Hardhat 默认测试账户 #1", 
+    "0x70997970C51812dc3A010C7d01b50e0d17dc79C8": {
+      "balance": "10000000000000000000000000"
+    },
+    "_comment_hardhat_account_2": "Hardhat 默认测试账户 #2",
+    "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC": {
+      "balance": "10000000000000000000000000"
+    },
+    "_comment_faucet_accounts": "用于水龙头的账户",
+    "0x0000000000000000000000000000000000000001": { 
+      "balance": "1000000000000000000000000" 
+    },
+    "0x0000000000000000000000000000000000000002": { 
+      "balance": "1000000000000000000000000" 
+    }
+  },
+  "coinbase": "0x0000000000000000000000000000000000000000",
+  "timestamp": "0x0",
+  "nonce": "0x0"
+}

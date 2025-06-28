@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   redis-db:
     extends:
@@ -34,10 +32,11 @@ services:
     links:
       - db:database
     environment:
-        ETHEREUM_JSONRPC_HTTP_URL: http://host.docker.internal:8545/
-        ETHEREUM_JSONRPC_TRACE_URL: http://host.docker.internal:8545/
-        ETHEREUM_JSONRPC_WS_URL: ws://host.docker.internal:8545/
-        CHAIN_ID: '1337'
+        ETHEREUM_JSONRPC_HTTP_URL: http://192.168.0.44:8545/
+        ETHEREUM_JSONRPC_TRACE_URL: http://192.168.0.44:8545/
+        ETHEREUM_JSONRPC_WS_URL: ws://192.168.0.44:8546/
+        CHAIN_ID: '12345'
+        NFT_MEDIA_HANDLER_ENABLED: 'false'
 
   nft_media_handler:
     depends_on:
