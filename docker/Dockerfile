@@ -23,6 +23,17 @@ COPY config ./config
 COPY rel ./rel
 COPY apps ./apps
 
+# add nodejs/yarn while building 
+RUN apk add --no-cache nodejs npm yarn
+
+# enter assets directory, install dependencies and build
+WORKDIR /app/apps/block_scout_web/assets
+RUN yarn install --frozen-lockfile && yarn deploy
+
+# return to /app directory and execute digest
+WORKDIR /app
+RUN mix phx.digest
+
 ##############################################################
 FROM builder-deps AS builder
 
